@@ -22,8 +22,24 @@ def crLagrangePolynomial(x_array, y_array):
     return lagrangePolynomal
 
 x_array = [0, 2, 3, 5, 7, 10, 20]
-y_array = [0, 1, 3, 2, 5, 2, 5]
+y_array = [1]*len(x_array)
 
 lag_pol = crLagrangePolynomial(x_array, y_array)
-for x in x_array:
-    print("x =", float(x), "\t y =", float(lag_pol(x)))
+# for x in x_array:
+#     print("x =", float(x), "\t y =", float(lag_pol(x)))
+
+# на вход отрезок и кол-во узлов в нём
+# взять любую точку и подставить в полином Лагранжа, вычислив точное значение
+
+a = int(input("Введите начало отрезка "))
+b = int(input("Введите конец отрезка "))
+c = int(input("Введите кол-во узлов "))
+
+knot = [float((b-a)/c*i) for i in range(c)]
+
+x_array = knot
+y_array = [1, 1, 1, 1, 1, 1, 1]
+lag_pol = crLagrangePolynomial(x_array, y_array)
+
+x = float(knot[int(c/2)] + (knot[int((c/2))+1] - knot[int(c/2)])*0.5)
+print("x =", float(x), "\t y =", float(lag_pol(x)))
