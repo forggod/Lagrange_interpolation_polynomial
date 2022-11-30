@@ -1,4 +1,8 @@
 def crBasicPolynomal(i, x_ar):
+    """
+        Li(x) = composition((x-xj)/(xi-xj))
+        L(x) = sum(yi*Li(x))
+    """
     def basicPolynomal(x):
         dividend = 1
         divider = 1
