@@ -1,3 +1,6 @@
+import math
+
+
 def crBasicPolynomal(i, x_ar):
     """
         Li(x) = composition((x-xj)/(xi-xj))
@@ -9,9 +12,10 @@ def crBasicPolynomal(i, x_ar):
         for j in range(len(x_ar)):
             if j != i:
                 dividend *= x - x_ar[j]
-                divider *= x_array[i] - x_array[j]
+                divider *= x_ar[i] - x_ar[j]
         return dividend/divider
     return basicPolynomal
+
 
 def crLagrangePolynomial(x_array, y_array):
     def lagrangePolynomal(x):
@@ -25,25 +29,26 @@ def crLagrangePolynomial(x_array, y_array):
         bs_pol.append(crBasicPolynomal(i, x_array))
     return lagrangePolynomal
 
-x_array = [0, 2, 3, 5, 7, 10, 20]
-y_array = [1]*len(x_array)
 
-lag_pol = crLagrangePolynomial(x_array, y_array)
-# for x in x_array:
-#     print("x =", float(x), "\t y =", float(lag_pol(x)))
+x = [1, 1/2, 1/4, 1/8]
+y = [round(math.sin((math.pi*el)/2), 8) for el in x]
 
-# на вход отрезок и кол-во узлов в нём
-# взять любую точку и подставить в полином Лагранжа, вычислив точное значение
+lag_pol = crLagrangePolynomial(x, y)
+x_ex = [0.2, 0.4]
+y_ex = [round(lag_pol(el), 8) for el in x_ex]
 
-a = int(input("Введите начало отрезка "))
-b = int(input("Введите конец отрезка "))
-c = int(input("Введите кол-во узлов "))
+print()
 
-knot = [float((b-a)/c*i) for i in range(c)]
+###################################################################################################################
 
-x_array = knot
-y_array = [1, 1, 1, 1, 1, 1, 1]
-lag_pol = crLagrangePolynomial(x_array, y_array)
+print(" y = sin((PI * x) / 2) ".center(40, '#'))
+print(f'Точное значение'.center(40, '-'))
+[print(f'x = {el} | y = {round(math.sin((math.pi*el)/2), 8)}'.center(40, " ")) for el in x_ex]
+print(f'Приблизительное значение'.center(40, '-'))
+[print(f'x = {x_ex[i]} | y = {y_ex[i]}'.center(40, " ")) for i in range(2)]
+print(f'Погрешность'.center(40, '*'))
+[print(f'{round(abs(round(math.sin((math.pi*x_ex[i])/2), 8) - y_ex[i]), 10)}'.center(40, " ")) for i in range(2)]
 
-x = float(knot[int(c/2)] + (knot[int((c/2))+1] - knot[int(c/2)])*0.5)
-print("x =", float(x), "\t y =", float(lag_pol(x)))
+###################################################################################################################
+
+print()
